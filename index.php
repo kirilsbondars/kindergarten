@@ -10,75 +10,43 @@ const IMAGE_DIR = __DIR__ . '/img/';
 const CONTROLLERS_DIR = __DIR__ . '/content/controllers/';
 
 // init database connection, session and current user
+require 'vendor/autoload.php';
 require_once CONTENT_DIR . 'Database.php';
 require_once CONTROLLERS_DIR . 'User.php';
+
 Database::connect();
 session_start();
 $current_user = User::get_current_user();
 
+$dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
+    $r->addRoute(['GET', 'POST'], '/login', AUTH_DIR . 'login.php');
+    $r->addRoute(['GET', 'POST'], '/sign_up', AUTH_DIR . 'sign_up.php');
+    $r->addRoute('GET', '/logout', AUTH_DIR . 'logout.php');
+    $r->addRoute('GET', '/news', NEWS_DIR . 'view_all.php');
+    $r->addRoute(['GET', 'POST'], '/news_article/create', NEWS_DIR . 'create.php');
+    $r->addRoute('GET', '/news_article/view/{id:\d+}', NEWS_DIR . 'view.php');
+    $r->addRoute(['GET', 'POST'], '/news_article/update/{id:\d+}', NEWS_DIR . 'update.php');
+    $r->addRoute('GET', '/news_article/delete/{id:\d+}', NEWS_DIR . 'delete.php');
+    // ... add more routes as needed ...
+});
 
-$request = $_SERVER['REQUEST_URI'];
+$httpMethod = $_SERVER['REQUEST_METHOD'];
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 
-// delete news article with specific id
-if (preg_match('/\/news\/delete\/(\d+)/', $request, $matches)) {
-    $_GET['id'] = $matches[1];
-    require NEWS_DIR . 'delete.php';
-    exit();
-}
-
-// edit news article with specific id
-if (preg_match('/\/news\/update\/(\d+)/', $request, $matches)) {
-    $_GET['id'] = $matches[1];
-    require NEWS_DIR . 'update.php';
-    exit();
-}
-
-// view news article with specific id
-if (preg_match('/\/news\/view\/(\d+)/', $request, $matches)) {
-    $_GET['id'] = $matches[1];
-    require NEWS_DIR . 'view.php';
-    exit();
-}
-
-// view all news articles enable search
-if (preg_match('/\/news/', $request)) {
-    $_GET['search'] = $_GET['search'] ?? null;
-    require NEWS_DIR . 'view_all.php';
-    exit();
-}
-
-// access to images stored in /img/ folder
-if (preg_match('/\/img\/(.+)/', $request, $matches)) {
-    $imagePath = IMAGE_DIR . $matches[1];
-    if (file_exists($imagePath)) {
-        header('Content-Type: ' . mime_content_type($imagePath));
-        readfile($imagePath);
-        exit();
-    }
-}
-
-switch ($request) {
-    case '/login':
-        require AUTH_DIR . 'login.php';
-        break;
-
-    case '/sign_up':
-        require AUTH_DIR . 'sign_up.php';
-        break;
-
-    case '/logout':
-        require AUTH_DIR . 'logout.php';
-        break;
-
-    case '/news':
-        require NEWS_DIR . 'view_all.php';
-        break;
-
-    case '/news/create':
-        require NEWS_DIR . 'create.php';
-        break;
-
-    default:
+switch ($routeInfo[0]) {
+    case FastRoute\Dispatcher::NOT_FOUND:
         require BASE_DIR . '404.php';
         http_response_code(404);
+        break;
+    case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+        $allowedMethods = $routeInfo[1];
+        http_response_code(405);
+        break;
+    case FastRoute\Dispatcher::FOUND:
+        $handler = $routeInfo[1];
+        $vars = $routeInfo[2];
+        $_GET = array_merge($_GET, $vars); // Merge route parameters into $_GET
+        require $handler;
+        break;
 }

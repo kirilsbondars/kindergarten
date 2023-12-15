@@ -24,7 +24,7 @@ $all_news = News::get_all($search);
     <div class="container w-50 d-flex justify-content-center align-items-center mb-3">
         <div class="row">
             <div class="col">
-                <a href="/news/create" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Pievienot jaunu</a>
+                <a href="/news_article/create" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Pievienot jaunu</a>
             </div>
         </div>
     </div>
@@ -40,10 +40,10 @@ $all_news = News::get_all($search);
                     <p class="card-text"><?php echo $news_item->getDescription() ?></p>
                     <p class="card-text"><small class="text-body-secondary"><?php echo $news_item->getCreatedAt() ?></small></p>
                     <p class="card-text">
-                        <small class="text-body-secondary"><a href="/news/view/<?php echo $news_item->getId() ?>">Vairāk</a></small>
+                        <small class="text-body-secondary"><a href="/news_article/view/<?php echo $news_item->getId() ?>">Vairāk</a></small>
                         <?php if(is_user_and_admin()) { ?>
-                        <small class="text-body-secondary"><a href="/news/update/<?php echo $news_item->getId() ?>">Rediģēt</a></small>
-                        <small class="text-body-secondary"><a href="/news/delete/<?php echo $news_item->getId() ?>">Nodzēst</a></small>
+                        <small class="text-body-secondary"><a href="/news_article/update/<?php echo $news_item->getId() ?>">Rediģēt</a></small>
+                        <small class="text-body-secondary"><a href="/news_article/delete/<?php echo $news_item->getId() ?>">Nodzēst</a></small>
                         <?php } ?>
                     </p>
                 </div>
