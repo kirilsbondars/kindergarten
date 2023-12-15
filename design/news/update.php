@@ -10,24 +10,28 @@ if (isset($_GET['id'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = htmlspecialchars($_POST['title']);
     $description = htmlspecialchars($_POST['description']);
-    $image = $_FILES['image'];
 
-    $image_name = uniqid() . '_' . $image['name'];
-    $destination = IMAGE_DIR . $image_name;
+    if (!empty($_FILES['new_image']['name'])) {
+        $image = $_FILES['new_image'];
+        $image_name = uniqid() . '_' . $image['name'];
+        $destination = IMAGE_DIR . $image_name;
 
-    if (move_uploaded_file($image['tmp_name'], $destination)) {
-        if ($news) {
-            $news->setTitle($title);
-            $news->setDescription($description);
+        if (move_uploaded_file($image['tmp_name'], $destination)) {
+            $news->delete_image();
             $news->setImage($image_name);
-            $news->update();
+        } else {
+            echo 'Error while uploading new image.';
         }
-
-        header('Location: /news');
-        exit();
-    } else {
-        echo 'Error while uploading image.';
     }
+
+    if ($news) {
+        $news->setTitle($title);
+        $news->setDescription($description);
+        $news->update();
+    }
+
+    header('Location: /news');
+    exit();
 }
 ?>
 
@@ -45,8 +49,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="form-group mb-2">
-                <label for="image">Attēls:</label>
-                <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                <label for="image">Tekošais attēls:</label>
+                <div class="text-center">
+                    <img src="/img/<?php echo $news ? $news->getImage() : ''; ?>" alt="Current Image" width="75%">
+                </div>
+            </div>
+
+            <div class="form-group mb-2">
+                <label for="new_image">Jaunais attēls:</label>
+                <input type="file" class="form-control" id="new_image" name="new_image">
             </div>
 
             <button type="submit" class="btn btn-primary mx-auto d-block mt-4">Atjaunot</button>

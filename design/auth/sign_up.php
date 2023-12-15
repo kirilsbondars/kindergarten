@@ -34,12 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
     <div class="container w-50 p-3">
-
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="/login" type="button" class="btn btn-outline-secondary">Ielogoties</a>
-        </div>
-
-        <h1 class="mx-auto text-center p-2">Reģistrācija</h1>
+        <h1 class="mx-auto text-center p-2">Reģistrēties</h1>
         <form method="POST">
             <div class="form-group mb-2">
                 <label for="name">Vārds:</label>

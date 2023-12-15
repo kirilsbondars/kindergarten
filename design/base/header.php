@@ -11,7 +11,7 @@
 <body>
     <nav class="navbar navbar-expand-md bg-body-tertiary mb-4">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="/news">Bērnudarzs</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -21,10 +21,10 @@
                         <a class="nav-link" href="/news">Ziņu dēlis</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
+                        <a class="nav-link" href="#">Viesu grāmata</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
+                        <a class="nav-link" href="#">Mūsu pedagogi</a>
                     </li>
                 </ul>
                 <span class="navbar-text">
@@ -33,8 +33,18 @@
                         <a href="/logout" class="btn btn-outline-secondary">Iziet</a>
                     <?php else: ?>
                         <a href="/login" class="btn btn-outline-secondary">Ielogoties</a>
+                        <a href="/sign_up" class="btn btn-outline-secondary">Reģistrēties</a>
                     <?php endif; ?>
                 </span>
             </div>
         </div>
     </nav>
+    <?php if (isset($_SESSION['success_message'])): ?>
+        <div class="container w-50 p-3">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <?php echo $_SESSION['success_message']; ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        <?php unset($_SESSION['success_message']); ?>
+    <?php endif; ?>

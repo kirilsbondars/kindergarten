@@ -14,6 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $news = News::createNews($title, $image_name, $description);
 
         if ($news->create()) {
+            $_SESSION['success_message'] = 'Jauna ziņa "' . $news->getTitle() . '" tika izveidota.';
             header('Location: /news');
             exit();
         } else {

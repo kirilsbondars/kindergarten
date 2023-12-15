@@ -60,9 +60,18 @@ class News {
         return $this->created_at;
     }
 
-    public static function get_all() {
+    public static function get_all($search = null) {
         $sql = "SELECT * FROM news";
-        $result = Database::query($sql);
+        if ($search) {
+            $search = '%' . $search . '%';
+            $sql .= " WHERE title LIKE ? OR description LIKE ?";
+        }
+        $stmt = Database::prepare($sql);
+        if ($search) {
+            $stmt->bind_param("ss", $search, $search);
+        }
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         $news_objects = [];
         while ($news_item = $result->fetch_assoc()) {
@@ -104,13 +113,18 @@ class News {
         $deleteSuccessful = $stmt->execute();
 
         if ($deleteSuccessful) {
-            $imagePath = IMAGE_DIR . $this->image;
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
-            }
+            $this->delete_image();
         }
 
         return $deleteSuccessful;
+    }
+
+    public function delete_image(): void
+    {
+        $imagePath = IMAGE_DIR . $this->image;
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
     }
 
     public function update(): bool

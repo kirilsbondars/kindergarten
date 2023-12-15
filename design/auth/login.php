@@ -19,10 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
     <div class="container w-50 p-3">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="/sign_up" type="button" class="btn btn-outline-secondary">Lietotāja reģistrācija</a>
-        </div>
-
         <h1 class="mx-auto text-center p-2">Ielogoties</h1>
         <form method="POST">
             <div class="form-group mb-2">
