@@ -6,25 +6,15 @@ require_once(CONTROLLERS_DIR . 'User.php');
 require_once (CONTENT_DIR . 'functions.php');
 
 $search = $_GET['search'] ?? null;
+$order = $_GET['order'] ?? 'DESC';
 $all_news = News::get_all($search);
 ?>
-
-    <div class="container w-50 d-flex justify-content-center align-items-center mb-3">
-        <div class="row">
-            <div class="col">
-                <form action="/news" method="get" class="input-group">
-                    <input type="text" name="search" placeholder="Search news" class="form-control">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </form>
-            </div>
-        </div>
-    </div>
 
     <?php if(is_user_and_admin()) { ?>
     <div class="container w-50 d-flex justify-content-center align-items-center mb-3">
         <div class="row">
             <div class="col">
-                <a href="/news_article/create" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Pievienot jaunu</a>
+                <a href="/news_article/create" class="btn btn-primary" role="button" aria-pressed="true">Pievienot jaunu ziņu</a>
             </div>
         </div>
     </div>
@@ -32,6 +22,20 @@ $all_news = News::get_all($search);
 
     <div class="container d-flex justify-content-center align-items-center">
         <div class="col-lg-6 col-md-10">
+            <form action="/news" method="get" class="input-group mb-4">
+                <input type="text" name="search" placeholder="Search news" class="form-control" id="search-input" value="<?php echo $search ?>">
+                <select name="order" class="form-select">
+                    <option value="DESC" <?php echo $order == 'DESC' ? 'selected' : '' ?>>Descending</option>
+                    <option value="ASC" <?php echo $order == 'ASC' ? 'selected' : '' ?>>Ascending</option>
+                </select>
+                <button type="submit" class="btn btn-primary" id="search-button">Atrast</button>
+                <a href="/news" class="btn btn-secondary" role="button" aria-pressed="true">Atpakaļ</a>
+            </form>
+
+            <?php if (empty($all_news)) { ?>
+                <p>Nevienas ziņas netika atrasts. :(</p>
+            <?php } ?>
+
             <?php foreach ($all_news as $news_item) { ?>
             <div class="card mb-3">
                 <img src="/img/<?php echo $news_item->getImage() ?>" class="card-img-top" alt="...">
@@ -51,5 +55,16 @@ $all_news = News::get_all($search);
             <?php } ?>
         </div>
     </div>
+
+    <script>
+        let searchInput = document.getElementById('search-input');
+        let searchButton = document.getElementById('search-button');
+
+        searchButton.disabled = !searchInput.value;
+
+        searchInput.addEventListener('input', function() {
+            searchButton.disabled = !this.value;
+        });
+    </script>
 
 <?php include(BASE_DIR . 'footer.php'); ?>
