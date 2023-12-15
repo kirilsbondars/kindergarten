@@ -40,6 +40,7 @@ if (preg_match('/\/news\/view\/(\d+)/', $request, $matches)) {
     exit();
 }
 
+// view all news articles enable search
 if (preg_match('/\/news/', $request)) {
     $_GET['search'] = $_GET['search'] ?? null;
     require NEWS_DIR . 'view_all.php';
@@ -73,14 +74,11 @@ switch ($request) {
         require NEWS_DIR . 'view_all.php';
         break;
 
-    case '/news/view':
-        require NEWS_DIR . 'view.php';
-        break;
-
     case '/news/create':
         require NEWS_DIR . 'create.php';
         break;
 
     default:
+        require BASE_DIR . '404.php';
         http_response_code(404);
 }
