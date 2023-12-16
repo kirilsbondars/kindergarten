@@ -5,9 +5,9 @@ require_once(CONTROLLERS_DIR . 'News.php');
 require_once(CONTROLLERS_DIR . 'User.php');
 require_once (CONTENT_DIR . 'functions.php');
 
-$search = $_GET['search'] ?? null;
+$search = $_GET['search'] ?? '';
 $order = $_GET['order'] ?? 'DESC';
-$all_news = News::get_all($search);
+$all_news = News::get_all($search, $order);
 ?>
 
     <?php if(is_user_and_admin()) { ?>
@@ -24,13 +24,18 @@ $all_news = News::get_all($search);
         <div class="col-lg-6 col-md-10">
             <form action="/news" method="get" class="input-group mb-4">
                 <input type="text" name="search" placeholder="Search news" class="form-control" id="search-input" value="<?php echo $search ?>">
-                <select name="order" class="form-select">
-                    <option value="DESC" <?php echo $order == 'DESC' ? 'selected' : '' ?>>Descending</option>
-                    <option value="ASC" <?php echo $order == 'ASC' ? 'selected' : '' ?>>Ascending</option>
+                <select name="order" class="form-select" onchange="this.form.submit()">
+                    <option value="DESC" <?php echo $order === 'DESC' ? 'selected' : '' ?>>Jaukakas ziņas</option>
+                    <option value="ASC" <?php echo $order === 'ASC' ? 'selected' : '' ?>>Vecākas ziņas</option>
                 </select>
                 <button type="submit" class="btn btn-primary" id="search-button">Atrast</button>
                 <a href="/news" class="btn btn-secondary" role="button" aria-pressed="true">Atpakaļ</a>
             </form>
+        </div>
+    </div>
+
+    <div class="container d-flex justify-content-center align-items-center">
+        <div class="col-lg-6 col-md-10">
 
             <?php if (empty($all_news)) { ?>
                 <p>Nevienas ziņas netika atrasts. :(</p>

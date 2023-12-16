@@ -60,12 +60,13 @@ class News {
         return $this->created_at;
     }
 
-    public static function get_all($search = null) {
+    public static function get_all($search = null, $order = 'DESC') {
         $sql = "SELECT * FROM news";
         if ($search) {
             $search = '%' . $search . '%';
             $sql .= " WHERE title LIKE ? OR description LIKE ?";
         }
+        $sql .= " ORDER BY created_at " . $order;
         $stmt = Database::prepare($sql);
         if ($search) {
             $stmt->bind_param("ss", $search, $search);
