@@ -23,7 +23,7 @@ $all_news = News::get_all($search, $order);
     <div class="container d-flex justify-content-center align-items-center">
         <div class="col-lg-6 col-md-10">
             <form action="/news" method="get" class="input-group mb-4">
-                <input type="text" name="search" placeholder="Search news" class="form-control" id="search-input" value="<?php echo $search ?>">
+                <input type="text" name="search" placeholder="Meklēt" class="form-control" id="search-input" value="<?php echo $search ?>">
                 <select name="order" class="form-select" onchange="this.form.submit()">
                     <option value="DESC" <?php echo $order === 'DESC' ? 'selected' : '' ?>>Jaukakas ziņas</option>
                     <option value="ASC" <?php echo $order === 'ASC' ? 'selected' : '' ?>>Vecākas ziņas</option>

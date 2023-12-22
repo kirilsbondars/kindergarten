@@ -24,7 +24,7 @@
                         <a class="nav-link" href="#">Viesu grāmata</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Mūsu pedagogi</a>
+                        <a class="nav-link" href="/teachers">Mūsu pedagogi</a>
                     </li>
                 </ul>
                 <span class="navbar-text">

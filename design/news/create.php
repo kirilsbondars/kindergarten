@@ -1,4 +1,5 @@
 <?php
+#TODO: translate to Latvian
 include BASE_DIR . 'header.php';
 require_once CONTROLLERS_DIR . 'News.php';
 

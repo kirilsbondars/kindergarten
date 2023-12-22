@@ -1,4 +1,6 @@
 <?php
+#TODO: translate to Latvian
+#TODO: confirm before deleting
 include BASE_DIR . 'header.php';
 require_once CONTROLLERS_DIR . 'News.php';
 

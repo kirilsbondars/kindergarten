@@ -1,4 +1,5 @@
 <?php
+#TODO: add message for successful update
 include BASE_DIR . 'header.php';
 require_once CONTROLLERS_DIR . 'News.php';
 
@@ -27,7 +28,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($news) {
         $news->setTitle($title);
         $news->setDescription($description);
-        $news->update();
+        if($news->update()) {
+            $_SESSION['success_message'] = 'Ziņa "' . $news->getTitle() . '" tika atjaunota.';
+        }
     }
 
     header('Location: /news');
