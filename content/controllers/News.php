@@ -135,12 +135,4 @@ class News {
         $stmt->bind_param("sssi", $this->title, $this->image, $this->description, $this->id);
         return $stmt->execute();
     }
-
-    public function save() {
-        if ($this->id) {
-            $this->update();
-        } else {
-            $this->create();
-        }
-    }
 }

@@ -3,7 +3,7 @@ require_once CONTROLLERS_DIR . 'Teacher.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $id = $_GET['id'];
-    $teacher = Teacher::get_teacher_by_id($id);
+    $teacher = Teacher::getTeacherById($id);
 
     if ($teacher) {
         $result = $teacher->delete();

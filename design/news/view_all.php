@@ -28,8 +28,8 @@ $all_news = News::get_all($search, $order);
                     <option value="DESC" <?php echo $order === 'DESC' ? 'selected' : '' ?>>Jaukakas ziņas</option>
                     <option value="ASC" <?php echo $order === 'ASC' ? 'selected' : '' ?>>Vecākas ziņas</option>
                 </select>
-                <button type="submit" class="btn btn-primary" id="search-button">Atrast</button>
-                <a href="/news" class="btn btn-secondary" role="button" aria-pressed="true">Atpakaļ</a>
+                <button type="submit" class="btn btn-primary" id="search-button">Meklēt</button>
+                <a href="/news" class="btn btn-secondary" role="button" aria-pressed="true" id="remove-button">Nodzest</a>
             </form>
         </div>
     </div>

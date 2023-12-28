@@ -3,7 +3,7 @@ require_once BASE_DIR . 'header.php';
 require_once(CONTROLLERS_DIR . 'Teacher.php');
 require_once CONTENT_DIR . 'functions.php';
 
-$teachers = Teacher::get_all();
+$teachers = Teacher::getAll();
 ?>
 
 
@@ -34,8 +34,8 @@ $teachers = Teacher::get_all();
                         <div class="card-footer">
                             <small class="text-muted">Age: <?php echo $teacher->getAge() ?></small>
                             <?php if(is_user_and_admin()) { ?>
-                            <a href="/teacher/update/<?php echo $teacher->getId() ?>" class="btn btn-primary">Rediģēt</a>
-                            <a href="/teacher/delete/<?php echo $teacher->getId() ?>" class="btn btn-danger">Nodzēst</a>
+                            <a href="/teacher/update/<?php echo $teacher->getId() ?>">Rediģēt</a>
+                            <a href="/teacher/delete/<?php echo $teacher->getId() ?>">Nodzēst</a>
                             <?php } ?>
                         </div>
                     </div>

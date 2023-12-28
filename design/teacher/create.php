@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="form-group mb-2">
                 <label for="age">Vecums:</label>
-                <input type="number" class="form-control" id="age" name="age" min="1" max="150" required>
+                <input type="number" class="form-control" id="age" name="age" min="18" max="150" required>
             </div>
 
             <div class="form-group mb-2">

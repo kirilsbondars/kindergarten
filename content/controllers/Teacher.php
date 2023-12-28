@@ -67,7 +67,8 @@ class Teacher {
         $this->image = $image;
     }
 
-    public static function get_all() {
+    public static function getAll(): array
+    {
         $sql = "SELECT * FROM teachers";
         $result = Database::query($sql);
 
@@ -81,7 +82,8 @@ class Teacher {
         return $teacher_objects;
     }
 
-    public static function get_teacher_by_id($id) {
+    public static function getTeacherById($id): ?Teacher
+    {
         $sql = "SELECT * FROM teachers WHERE id = $id";
         $result = Database::query($sql);
 
@@ -108,7 +110,13 @@ class Teacher {
         $sql = "DELETE FROM teachers WHERE id = ?";
         $stmt = Database::prepare($sql);
         $stmt->bind_param("i", $this->id);
-        return $stmt->execute();
+        $deleteSuccessful = $stmt->execute();
+
+        if ($deleteSuccessful) {
+            $this->deleteImage();
+        }
+
+        return $deleteSuccessful;
     }
 
     public function update(): bool
@@ -119,11 +127,21 @@ class Teacher {
         return $stmt->execute();
     }
 
-    public function getPathToImage() {
+    public function getPathToImage(): string
+    {
         return '/img/' . $this->image;
     }
 
-    public function getFullName() {
+    public function getFullName(): string
+    {
         return $this->name . ' ' . $this->surname;
+    }
+
+    public function deleteImage(): void
+    {
+        $imagePath = IMAGE_DIR . $this->image;
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
     }
 }
