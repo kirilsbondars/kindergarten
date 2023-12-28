@@ -7,7 +7,7 @@ $teachers = Teacher::getAll();
 ?>
 
 
-<?php if(is_user_and_admin()) { ?>
+<?php if(isUserAndAdmin()) { ?>
     <div class="container w-50 d-flex justify-content-center align-items-center mb-3">
         <div class="row">
             <div class="col">
@@ -33,9 +33,9 @@ $teachers = Teacher::getAll();
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">Age: <?php echo $teacher->getAge() ?></small>
-                            <?php if(is_user_and_admin()) { ?>
+                            <?php if(isUserAndAdmin()) { ?>
                             <a href="/teacher/update/<?php echo $teacher->getId() ?>">Rediģēt</a>
-                            <a href="/teacher/delete/<?php echo $teacher->getId() ?>">Nodzēst</a>
+                            <a href="/teacher/delete/<?php echo $teacher->getId() ?>" onclick="return confirm('Vai tiešām vēlaties dzēst šo pedadogu no saraksta?')">Nodzēst</a>
                             <?php } ?>
                         </div>
                     </div>

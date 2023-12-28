@@ -10,7 +10,7 @@ $order = $_GET['order'] ?? 'DESC';
 $all_news = News::get_all($search, $order);
 ?>
 
-    <?php if(is_user_and_admin()) { ?>
+    <?php if(isUserAndAdmin()) { ?>
     <div class="container w-50 d-flex justify-content-center align-items-center mb-3">
         <div class="row">
             <div class="col">
@@ -50,9 +50,9 @@ $all_news = News::get_all($search, $order);
                     <p class="card-text"><small class="text-body-secondary"><?php echo $news_item->getCreatedAt() ?></small></p>
                     <p class="card-text">
                         <small class="text-body-secondary"><a href="/news_article/view/<?php echo $news_item->getId() ?>">Vairāk</a></small>
-                        <?php if(is_user_and_admin()) { ?>
+                        <?php if(isUserAndAdmin()) { ?>
                         <small class="text-body-secondary"><a href="/news_article/update/<?php echo $news_item->getId() ?>">Rediģēt</a></small>
-                        <small class="text-body-secondary"><a href="/news_article/delete/<?php echo $news_item->getId() ?>">Nodzēst</a></small>
+                        <small class="text-body-secondary"><a href="/news_article/delete/<?php echo $news_item->getId() ?>" onclick="return confirm('Vai tiešām vēlaties dzēst šo ziņu?')">Nodzēst</a></small>
                         <?php } ?>
                     </p>
                 </div>

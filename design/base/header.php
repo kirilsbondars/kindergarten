@@ -21,7 +21,7 @@
                         <a class="nav-link" href="/news">Ziņu dēlis</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Viesu grāmata</a>
+                        <a class="nav-link" href="/comments">Viesu grāmata</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/teachers">Mūsu pedagogi</a>
