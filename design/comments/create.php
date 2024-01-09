@@ -8,12 +8,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $comment = Comment::createComment($text, $current_user->getId());
 
-    if ($comment->create()) {
+    try {
+        $comment->create();
         $_SESSION['success_message'] = 'Jauns komentārs tika izveidots.';
         header('Location: /comments');
         exit();
-    } else {
-        echo 'Kļūda, izveidojot komentāru.';
+    } catch (Exception $e) {
+        $_SESSION['error_message'] = $e->getMessage();
+        header('Location: /comments');
+        exit();
     }
 }
 

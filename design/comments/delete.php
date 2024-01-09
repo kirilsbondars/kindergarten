@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $result = $comment->delete();
 
         if ($result) {
-            $_SESSION['success_message'] = "Komentārs tika izdzēsts.";
+            $_SESSION['success_message'] = "Komentārs (datums: " . $comment->getCreatedAt() . ", autors: " . $comment->getUserFullName() . ") tika izdzēsts.";
         } else {
             $_SESSION['error_message'] = "Kļūda, dzēšot komentāru.";
         }

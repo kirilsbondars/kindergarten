@@ -60,6 +60,21 @@ class Comment {
         return $this->user_full_name;
     }
 
+    private static function isUserAllowedToCreateComment($user_id): bool
+    {
+        $one_week_ago = date('Y-m-d H:i:s', strtotime('-1 week'));
+        $stmt = Database::prepare("SELECT COUNT(*) AS comment_count FROM comments WHERE user_id = ? AND created_at >= ?");
+        $stmt->bind_param("is", $user_id, $one_week_ago);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+
+        if ($result['comment_count'] >= 2) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public static function getAll($order = "DESC"): array
     {
         $order = strtoupper($order);
@@ -87,16 +102,16 @@ class Comment {
 
     public static function getCommentById($id): ?Comment
     {
-        $sql = "SELECT * FROM comments WHERE id = ?";
+        $sql = "SELECT c.id as comment_id, text, user_id, created_at, CONCAT(u.name, ' ', u.surname) as user_full_name FROM comments c
+                JOIN users u ON c.user_id = u.id WHERE c.id = ?";
         $stmt = Database::prepare($sql);
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
-            $comment_item = $result->fetch_assoc();
-            $comment = new Comment($comment_item['id'], $comment_item['text'], $comment_item['user_id'],
-                $comment_item['created_at'], null);
+            $c = $result->fetch_assoc();
+            $comment = new Comment($c["comment_id"], $c["text"], $c["user_id"], $c["created_at"], $c["user_full_name"]);
             return $comment;
         } else {
             return null;
@@ -105,6 +120,10 @@ class Comment {
 
     public function create(): bool
     {
+        if(!self::isUserAllowedToCreateComment($this->user_id)) {
+            throw new Exception('Jums nav atļauts izveidot vairāk nekā 2 komentārus nedēļā.');
+        }
+
         $sql = "INSERT INTO comments (text, user_id) VALUES (?, ?)";
         $stmt = Database::prepare($sql);
         $stmt->bind_param("si", $this->text, $this->user_id);
