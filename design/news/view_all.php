@@ -48,7 +48,7 @@ include(BASE_DIR . 'header.php');
                 <img src="/img/<?php echo $news_item->getImage() ?>" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $news_item->getTitle() ?></h5>
-                    <p class="card-text"><?php echo $news_item->getDescription() ?></p>
+                    <p class="card-text"><?php echo $news_item->shortDescription() ?></p>
                 </div>
                 <div class="card-footer">
                     <small class="text-body-secondary">Izveidots: <?php echo $news_item->getCreatedAt() ?></small><br>

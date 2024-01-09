@@ -60,6 +60,10 @@ class News {
         return $this->created_at;
     }
 
+    public function shortDescription() {
+        return substr($this->description, 0, 200) . '...';
+    }
+
     public static function get_all($search = null, $order = 'DESC') {
         $sql = "SELECT * FROM news";
         if ($search) {
