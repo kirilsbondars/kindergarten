@@ -1,6 +1,5 @@
 <?php
 #TODO: translate to Latvian
-#TODO: confirm before deleting
 include BASE_DIR . 'header.php';
 require_once CONTROLLERS_DIR . 'News.php';
 
@@ -13,11 +12,11 @@ if (isset($_GET['id'])) {
             header('Location: /news');
             exit();
         } else {
-            echo 'Error while deleting record.';
+            echo 'Kļūda, dzēšot ziņu.';
         }
     } else {
-        echo 'Record not found.';
+        echo 'Ziņa ar id "' . $id . '" netika atrasta.';
     }
 } else {
-    echo 'No ID parameter provided.';
+    echo 'Nav norādīts id.';
 }

@@ -1,6 +1,5 @@
 <?php
 global $current_user;
-include(BASE_DIR . 'header.php');
 require_once(CONTROLLERS_DIR . 'News.php');
 require_once(CONTROLLERS_DIR . 'User.php');
 require_once (CONTENT_DIR . 'functions.php');
@@ -8,6 +7,9 @@ require_once (CONTENT_DIR . 'functions.php');
 $search = $_GET['search'] ?? '';
 $order = $_GET['order'] ?? 'DESC';
 $all_news = News::get_all($search, $order);
+
+$title = 'Ziņu delis';
+include(BASE_DIR . 'header.php');
 ?>
 
     <?php if(isUserAndAdmin()) { ?>
@@ -38,7 +40,7 @@ $all_news = News::get_all($search, $order);
         <div class="col-lg-6 col-md-10">
 
             <?php if (empty($all_news)) { ?>
-                <p>Nevienas ziņas netika atrasts. :(</p>
+                <p class="text-center">Nevienas ziņas netika atrasts. :(</p>
             <?php } ?>
 
             <?php foreach ($all_news as $news_item) { ?>
@@ -47,14 +49,14 @@ $all_news = News::get_all($search, $order);
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $news_item->getTitle() ?></h5>
                     <p class="card-text"><?php echo $news_item->getDescription() ?></p>
-                    <p class="card-text"><small class="text-body-secondary"><?php echo $news_item->getCreatedAt() ?></small></p>
-                    <p class="card-text">
-                        <small class="text-body-secondary"><a href="/news_article/view/<?php echo $news_item->getId() ?>">Vairāk</a></small>
-                        <?php if(isUserAndAdmin()) { ?>
+                </div>
+                <div class="card-footer">
+                    <small class="text-body-secondary">Izveidots: <?php echo $news_item->getCreatedAt() ?></small><br>
+                    <small class="text-body-secondary"><a href="/news_article/view/<?php echo $news_item->getId() ?>">Vairāk</a></small>
+                    <?php if(isUserAndAdmin()) { ?>
                         <small class="text-body-secondary"><a href="/news_article/update/<?php echo $news_item->getId() ?>">Rediģēt</a></small>
                         <small class="text-body-secondary"><a href="/news_article/delete/<?php echo $news_item->getId() ?>" onclick="return confirm('Vai tiešām vēlaties dzēst šo ziņu?')">Nodzēst</a></small>
-                        <?php } ?>
-                    </p>
+                    <?php } ?>
                 </div>
             </div>
             <?php } ?>

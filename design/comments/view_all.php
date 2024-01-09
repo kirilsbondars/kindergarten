@@ -1,17 +1,18 @@
 <?php
 global $current_user;
-include(BASE_DIR . 'header.php');
 require_once(CONTROLLERS_DIR . 'Comment.php');
 require_once(CONTROLLERS_DIR . 'User.php');
 require_once (CONTENT_DIR . 'functions.php');
 
 $comments = Comment::getAll();
+
+$title = 'Viesu grāmata';
+include(BASE_DIR . 'header.php');
 ?>
 
     <div class="container">
     <div class="row">
         <div class="col text-center mb-3">
-            <h1 class="mx-auto text-center">Viesu delis</h1>
             <?php if(isUserAuthorized()): ?>
                 <a href="/comment/create" class="btn btn-primary" role="button">Pievienot jaunu komentāru</a>
             <?php else: ?>
@@ -34,7 +35,7 @@ $comments = Comment::getAll();
                         <small class="text-muted">Izveidots: <?php echo $comment->getCreatedAt() ?></small><br>
                         <small class="text-muted">Autors: <?php echo $comment->getUserFullName() ?></small>
                         <?php if(isUserAndAdmin()): ?>
-                            <br><a href="/comment/delete/<?php echo $comment->getId()?>" onclick="return confirm('Vai tiešām vēlaties dzēst šo komentāru?')">Delete</a>
+                            <br><a href="/comment/delete/<?php echo $comment->getId()?>" onclick="return confirm('Vai tiešām vēlaties dzēst šo komentāru?')">Nodzēst</a>
                         <?php endif; ?>
                     </div>
                 </div>

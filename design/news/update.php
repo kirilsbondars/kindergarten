@@ -1,6 +1,4 @@
 <?php
-#TODO: add message for successful update
-include BASE_DIR . 'header.php';
 require_once CONTROLLERS_DIR . 'News.php';
 
 $news = null;
@@ -36,6 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header('Location: /news');
     exit();
 }
+
+$title = 'Atjaunot ziņu';
+include(BASE_DIR . 'header.php');
 ?>
 
     <div class="container w-50 p-3">
@@ -60,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="form-group mb-2">
                 <label for="new_image">Jaunais attēls:</label>
-                <input type="file" class="form-control" id="new_image" name="new_image">
+                <input type="file" class="form-control" id="new_image" name="new_image" accept="image/*">
             </div>
 
             <button type="submit" class="btn btn-primary mx-auto d-block mt-4">Atjaunot</button>

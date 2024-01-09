@@ -101,7 +101,6 @@ class News {
     {
         $sql = "INSERT INTO news (title, image, description) VALUES (?, ?, ?)";
         $stmt = Database::prepare($sql);
-        echo $this->title . ' ' . $this->image . ' ' . $this->description . ' ' . $this->created_at;
         $stmt->bind_param("sss", $this->title, $this->image, $this->description);
         return $stmt->execute();
     }

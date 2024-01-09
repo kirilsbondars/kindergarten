@@ -1,5 +1,4 @@
 <?php
-include BASE_DIR . 'header.php';
 require_once CONTROLLERS_DIR . 'Teacher.php';
 
 $teacher = null;
@@ -39,10 +38,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header('Location: /teachers');
     exit();
 }
+
+$title = 'Atjaunot informāciju par pedagogu';
+include(BASE_DIR . 'header.php');
 ?>
 
     <div class="container w-50 p-3">
-        <h1 class="mx-auto text-center p-2">Atjaunot informāciju par pedagogu</h1>
+        <h1 class="mx-auto text-center p-2"><?php echo $title; ?></h1>
         <form method="POST" enctype="multipart/form-data">
             <div class="form-group mb-2">
                 <label for="name">Vārds:</label>

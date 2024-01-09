@@ -1,5 +1,4 @@
 <?php
-include BASE_DIR . 'header.php';
 require_once CONTROLLERS_DIR . 'Comment.php';
 
 global $current_user;
@@ -17,6 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo 'Kļūda, izveidojot komentāru.';
     }
 }
+
+$title = 'Izveidot jaunu komentāru';
+include(BASE_DIR . 'header.php');
 ?>
 
     <div class="container w-50 p-3">
@@ -24,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form method="POST">
             <div class="form-group mb-2">
                 <label for="text">Komentārs:</label>
-                <textarea class="form-control" id="text" name="text" rows="15" required></textarea>
+                <textarea class="form-control" id="text" name="text" rows="10" maxlength="255" required></textarea>
             </div>
 
             <button type="submit" class="btn btn-primary mx-auto d-block mt-4">Izveidot</button>

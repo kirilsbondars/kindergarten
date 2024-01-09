@@ -29,6 +29,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         $r->addRoute('GET', '/logout', AUTH_DIR . 'logout.php');
     }
 
+    $r->addRoute('GET', '/', NEWS_DIR . 'view_all.php');
     $r->addRoute('GET', '/news', NEWS_DIR . 'view_all.php');
     $r->addRoute('GET', '/news_article/view/{id:\d+}', NEWS_DIR . 'view.php');
     if(isUserAndAdmin()) {
@@ -45,8 +46,10 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     }
 
     $r->addRoute('GET', '/comments', COMMENTS_DIR . 'view_all.php');
-    if(isUserAndAdmin()) {
+    if(isUserAuthorized()) {
         $r->addRoute(['GET', 'POST'], '/comment/create', COMMENTS_DIR . 'create.php');
+    }
+    if(isUserAndAdmin()) {
         $r->addRoute('GET', '/comment/delete/{id:\d+}', COMMENTS_DIR . 'delete.php');
     }
 });

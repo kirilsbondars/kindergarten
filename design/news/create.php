@@ -1,6 +1,4 @@
 <?php
-#TODO: translate to Latvian
-include BASE_DIR . 'header.php';
 require_once CONTROLLERS_DIR . 'News.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -19,12 +17,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header('Location: /news');
             exit();
         } else {
-            echo 'Error while creating news article.';
+            echo 'Kļūda, veidojot ziņu.';
         }
     } else {
-        echo 'Error while uploading image.';
+        echo 'Kļūda, augšupielādējot attēlu';
     }
 }
+
+$title = 'Izveidot jaunu ziņu';
+include(BASE_DIR . 'header.php');
 ?>
 
     <div class="container w-50 p-3">

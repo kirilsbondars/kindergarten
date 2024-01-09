@@ -1,7 +1,5 @@
 <?php
-include BASE_DIR . 'header.php';
 require_once CONTROLLERS_DIR . 'User.php';
-
 
 $errors = [];
 
@@ -31,6 +29,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+
+$title = 'Reģistrēties';
+include(BASE_DIR . 'header.php');
 ?>
 
     <div class="container w-50 p-3">

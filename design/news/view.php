@@ -1,5 +1,4 @@
 <?php
-include BASE_DIR . 'header.php';
 require_once CONTROLLERS_DIR . 'News.php';
 
 $news = null;
@@ -7,6 +6,8 @@ if (isset($_GET['id'])) {
     $news = News::get_news_by_id($_GET['id']);
 }
 
+$title = 'Skatīt ziņu';
+include(BASE_DIR . 'header.php');
 ?>
 
     <div class="container w-50 p-3">
