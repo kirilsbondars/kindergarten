@@ -40,6 +40,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
 
     $r->addRoute('GET', '/teachers', TEACHER_DIR . 'view_all.php');
     if(isUserAndAdmin()) {
+        $r->addRoute(['GET'], '/teacher/view/{id:\d+}', TEACHER_DIR . 'view.php');
         $r->addRoute(['GET', 'POST'], '/teacher/create', TEACHER_DIR . 'create.php');
         $r->addRoute(['GET', 'POST'], '/teacher/update/{id:\d+}', TEACHER_DIR . 'update.php');
         $r->addRoute('GET', '/teacher/delete/{id:\d+}', TEACHER_DIR . 'delete.php');

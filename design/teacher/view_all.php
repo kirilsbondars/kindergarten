@@ -31,15 +31,16 @@ include(BASE_DIR . 'header.php');
                         <img class="card-img-top" src="<?php echo $teacher->getPathToImage() ?>" alt="Teacher image">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $teacher->getName() . ' ' . $teacher->getSurname() ?></h5>
-                            <p class="card-text"><?php echo $teacher->getDescription() ?></p>
+                            <p class="card-text"><?php echo $teacher->shortDescription() ?></p>
                             <small class="text-muted">Vecums: <?php echo $teacher->getAge() ?></small>
                         </div>
-                        <?php if(isUserAndAdmin()) { ?>
                             <div class="card-footer">
+                                <a href="/teacher/view/<?php echo $teacher->getId() ?>">Vairāk</a>
+                                <?php if(isUserAndAdmin()) { ?>
                                 <a href="/teacher/update/<?php echo $teacher->getId() ?>">Rediģēt</a>
                                 <a href="/teacher/delete/<?php echo $teacher->getId() ?>" onclick="return confirm('Vai tiešām vēlaties dzēst šo pedadogu no saraksta?')">Nodzēst</a>
+                                <?php } ?>
                             </div>
-                        <?php } ?>
                     </div>
                 </div>
             <?php endforeach; ?>

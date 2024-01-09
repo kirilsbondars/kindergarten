@@ -67,6 +67,10 @@ class Teacher {
         $this->image = $image;
     }
 
+    public function shortDescription() {
+        return substr($this->description, 0, 200) . '...';
+    }
+
     public static function getAll(): array
     {
         $sql = "SELECT * FROM teachers";
